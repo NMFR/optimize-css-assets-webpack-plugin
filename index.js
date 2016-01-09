@@ -1,51 +1,104 @@
 var _ = require('underscore');
-var cssnano = require('cssnano');
 
-function OptimizeCssAssetsPlugin() {};
+function OptimizeCssAssetsPlugin(options) {
+  this.options = options || {};
+  
+  if (this.options.assetNameRegExp === undefined) {
+    this.options.assetNameRegExp = /\.css$/g;
+  }
+  
+  if (this.options.cssProcessor === undefined) {
+    this.options.cssProcessor = require('cssnano');
+  }
+  
+  if (this.options.cssProcessorOptions === undefined) {
+    this.options.cssProcessorOptions = {};
+  }
+  
+  if (this.options.canPrint === undefined) {
+    this.options.canPrint = true;
+  }
+};
+
+OptimizeCssAssetsPlugin.prototype.print = function() {
+  if (this.options.canPrint) {
+    console.log.apply(console, arguments);  
+  }
+};
+
+OptimizeCssAssetsPlugin.prototype.processCss = function(css) {
+  return this.options.cssProcessor.process(css, this.options.cssProcessorOptions); 
+};
+
+OptimizeCssAssetsPlugin.prototype.createCssAsset = function(css, originalAsset) {
+  return {
+    source: function() {
+      return css;
+    },
+    size: function() {
+      return css.length;
+    }
+  };
+};
 
 OptimizeCssAssetsPlugin.prototype.apply = function(compiler) {
+  
+  var self = this;
+  
   compiler.plugin('emit', function(compilation, compileCallback) {
     
-    console.log('');
-    console.log('Starting to optimize CSS...');
+    self.print('\nStarting to optimize CSS...');
     
-    var cssFiles = _.filter(_.keys(compilation.assets), function(fn){ return fn && fn.match && fn.match(/\.css$/g); });
+    var assets = compilation.assets;
     
-    var counter = 0;
-    function checkFinish() {
-      if (cssFiles.length >= counter++) {
-        console.log('CSS optimize ended.');
-        compileCallback();
-      }
-    };
-    
-    _.each(
-      cssFiles,
-      function(assetName) {
-        console.log('Processing ' + assetName);
-        var asset = compilation.assets[assetName];
-        var originalCss = asset.source();
-        cssnano.process(originalCss, {discardComments: {removeAll: true}}).then(
-          function (result) {
-            var processedCss = result.css;
-            compilation.assets[assetName] = {
-              source: function() {
-                return processedCss;
-              },
-              size: function() {
-                return processedCss.length;
-              }
-            };
-            console.log('Processing ' + assetName + ' ended, before: ' + originalCss.length + ', after: ' + processedCss.length + ', ratio: ' + (Math.round(((processedCss.length * 100) / originalCss.length) * 100) / 100) + '%');
-            checkFinish();
-          }, function(err) {
-            console.log('Error processing file: ' + assetName);
-            console.log(err);
-            checkFinish();
-          }
-        );
+    var cssAssetNames = _.filter(
+      _.keys(assets), 
+      function(assetName) { 
+        return assetName.match(self.options.assetNameRegExp);
       }
     );
+    
+    var hasErrors = false;
+    var promises = [];
+    
+    _.each(
+      cssAssetNames,
+      function(assetName) {
+        
+        self.print('Processing ' + assetName + '...');
+        
+        var asset = assets[assetName];
+        
+        var originalCss = asset.source();
+        
+        var promise = self.processCss(originalCss); 
+        
+        promise.then(
+          function (result) {
+            
+            if (hasErrors) {
+              self.print('Skiping ' + assetName + ' because of an error.');  
+              return;
+            }
+            
+            var processedCss = result.css;
+            
+            assets[assetName] = self.createCssAsset(processedCss, asset);
+            
+            self.print('Processed ' + assetName + ', before: ' + originalCss.length + ', after: ' + processedCss.length + ', ratio: ' + (Math.round(((processedCss.length * 100) / originalCss.length) * 100) / 100) + '%');
+            
+          }, function(err) {
+            hasErrors = true;
+            self.print('Error processing file: ' + assetName);
+            console.error(err);
+          }
+        );
+        
+        promises.push(promise);
+      }
+    );
+    
+    Promise.all(promises).then(function () { compileCallback(); }, compileCallback);
   });
 };
 
