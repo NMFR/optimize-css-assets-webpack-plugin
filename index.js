@@ -1,39 +1,45 @@
-var fs = require('fs');
-var path = require('path');
 var _ = require('underscore');
 var cssnano = require('cssnano');
 
 function OptimizeCssAssetsPlugin() {};
 
 OptimizeCssAssetsPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('after-emit', function (compilation, callback) {
+  compiler.plugin('emit', function(compilation, compileCallback) {
+    
     console.log('');
     console.log('Starting to optimize CSS...');
-    var outputPath = compiler.options.output.path;
-    var stats = compilation.getStats().toJson();
-    var assetsByChunkName = stats.assetsByChunkName;
-    var files = _.flatten(_.values(assetsByChunkName));
-    var cssFiles = _.filter(files, function(fn){ return fn && fn.match && fn.match(/\.css$/g); });
+    
+    var cssFiles = _.filter(_.keys(compilation.assets), function(fn){ return fn && fn.match && fn.match(/\.css$/g); });
+    
     var counter = 0;
     function checkFinish() {
       if (cssFiles.length >= counter++) {
         console.log('CSS optimize ended.');
-        callback();
+        compileCallback();
       }
     };
+    
     _.each(
-      cssFiles, 
-      function(filename) {
-        console.log('Processing ' + filename);
-        var filePath = path.join(outputPath,  filename);
-        var css = fs.readFileSync(filePath, 'utf8');
-        cssnano.process(css, {discardComments: {removeAll: true}}).then(
+      cssFiles,
+      function(assetName) {
+        console.log('Processing ' + assetName);
+        var asset = compilation.assets[assetName];
+        var originalCss = asset.source();
+        cssnano.process(originalCss, {discardComments: {removeAll: true}}).then(
           function (result) {
-            fs.writeFileSync(filePath, result.css);
-            console.log('Processing ' + filename + ' ended');
+            var processedCss = result.css;
+            compilation.assets[assetName] = {
+              source: function() {
+                return processedCss;
+              },
+              size: function() {
+                return processedCss.length;
+              }
+            };
+            console.log('Processing ' + assetName + ' ended, before: ' + originalCss.length + ', after: ' + processedCss.length + ', ratio: ' + (Math.round(((processedCss.length * 100) / originalCss.length) * 100) / 100) + '%');
             checkFinish();
           }, function(err) {
-            console.log('Error processing file: ' + filename);
+            console.log('Error processing file: ' + assetName);
             console.log(err);
             checkFinish();
           }
