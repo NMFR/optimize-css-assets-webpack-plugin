@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var webpackSources = require('webpack-sources');
 
 function OptimizeCssAssetsPlugin(options) {
   this.options = options || {};
@@ -31,14 +32,7 @@ OptimizeCssAssetsPlugin.prototype.processCss = function(css) {
 };
 
 OptimizeCssAssetsPlugin.prototype.createCssAsset = function(css, originalAsset) {
-  return {
-    source: function() {
-      return css;
-    },
-    size: function() {
-      return css.length;
-    }
-  };
+  return new webpackSources.RawSource(css);
 };
 
 OptimizeCssAssetsPlugin.prototype.apply = function(compiler) {
