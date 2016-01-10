@@ -13,5 +13,14 @@
     "type": "git",
     "url": "http://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
   },
+  "keywords": [
+    "CSS",
+    "minimize",
+    "optimize",
+    "webpack",
+    "remove",
+    "duplicate",
+    "extract-text-webpack-plugin"
+  ],
   "license": "MIT"
 }
