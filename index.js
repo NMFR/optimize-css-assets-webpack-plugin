@@ -27,8 +27,8 @@ OptimizeCssAssetsPlugin.prototype.print = function() {
   }
 };
 
-OptimizeCssAssetsPlugin.prototype.processCss = function(css) {
-  return this.options.cssProcessor.process(css, this.options.cssProcessorOptions); 
+OptimizeCssAssetsPlugin.prototype.processCss = function(css, assetName) {
+  return this.options.cssProcessor.process(css, Object.assign({ to: assetName }, this.options.cssProcessorOptions)); 
 };
 
 OptimizeCssAssetsPlugin.prototype.createCssAsset = function(css, originalAsset) {
@@ -65,7 +65,7 @@ OptimizeCssAssetsPlugin.prototype.apply = function(compiler) {
         
         var originalCss = asset.source();
         
-        var promise = self.processCss(originalCss); 
+        var promise = self.processCss(originalCss, assetName); 
         
         promise.then(
           function (result) {
