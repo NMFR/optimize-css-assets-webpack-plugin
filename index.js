@@ -28,7 +28,7 @@ OptimizeCssAssetsPlugin.prototype.print = function() {
 };
 
 OptimizeCssAssetsPlugin.prototype.processCss = function(css, assetName) {
-  return this.options.cssProcessor.process(css, Object.assign({ to: assetName }, this.options.cssProcessorOptions))); 
+  return this.options.cssProcessor.process(css, Object.assign({ to: assetName }, this.options.cssProcessorOptions)); 
 };
 
 OptimizeCssAssetsPlugin.prototype.createCssAsset = function(css, originalAsset) {
