@@ -4,18 +4,33 @@ A Webpack plugin to optimize \ minimize CSS assets.
 
 ## What does the plugin do?
 
-It will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses [cssnano](http://github.com/ben-eb/cssnano) but a custom css processor can be specified). 
+It will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses [cssnano](http://github.com/ben-eb/cssnano) but a custom CSS processor can be specified).
+
+Note: To use the default CSS processor, [cssnano](http://github.com/ben-eb/cssnano) must be explicitly installed (since it's a peer dependency).
 
 ### Solves [extract-text-webpack-plugin](http://github.com/webpack/extract-text-webpack-plugin) CSS duplication problem:
 
 Since [extract-text-webpack-plugin](http://github.com/webpack/extract-text-webpack-plugin) only bundles (merges) text chunks, if its used to bundle CSS, the bundle might have duplicate entries (chunks can be duplicate free but when merged, duplicate CSS can be created).
 
+## Installation:
+
+Using npm:
+```shell
+$ npm install --save-dev optimize-css-assets-webpack-plugin
+```
+
+If you are not going to specify a CSS processor you will also need to install [cssnano](http://github.com/ben-eb/cssnano) (since it's a peer dependency):
+
+```shell
+$ npm install --save-dev cssnano
+```
+
 ## Configuration:
 
 The plugin can receive the following options (all of them are optional):
-* assetNameRegExp: A regular expression that indicates the names of the assets that should be optimized \ minimized, defaults to `/\.css$/g` 
-* cssProcessor: The css processor used to optimize \ minimize the CSS, defaults to [cssnano](http://github.com/ben-eb/cssnano). This should be a function that follows cssnano.process interface (receives a css and options parameters and returns a Promise). 
-* cssProcessorOptions: The options passed to the cssProcessor, defaults to `{}`  
+* assetNameRegExp: A regular expression that indicates the names of the assets that should be optimized \ minimized, defaults to `/\.css$/g`
+* cssProcessor: The CSS processor used to optimize \ minimize the CSS, defaults to [cssnano](http://github.com/ben-eb/cssnano). This should be a function that follows cssnano.process interface (receives a CSS and options parameters and returns a Promise).
+* cssProcessorOptions: The options passed to the cssProcessor, defaults to `{}`
 * canPrint: A boolean indicating if the plugin can print messages to the console, defaults to `true`
 
 ## Example:

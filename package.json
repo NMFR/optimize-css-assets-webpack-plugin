@@ -4,9 +4,11 @@
   "author": "Nuno Rodrigues",
   "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
   "dependencies": {
-    "cssnano": "^3.4.0",
     "underscore": "^1.8.3",
     "webpack-sources": "^0.1.0"
+  },
+  "peerDependencies": {
+    "cssnano": ">=3.4.0"
   },
   "main": "index.js",
   "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
