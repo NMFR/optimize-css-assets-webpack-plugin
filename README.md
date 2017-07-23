@@ -6,8 +6,6 @@ A Webpack plugin to optimize \ minimize CSS assets.
 
 It will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses [cssnano](http://github.com/ben-eb/cssnano) but a custom CSS processor can be specified).
 
-Note: To use the default CSS processor, [cssnano](http://github.com/ben-eb/cssnano) must be explicitly installed (since it's a peer dependency).
-
 ### Solves [extract-text-webpack-plugin](http://github.com/webpack/extract-text-webpack-plugin) CSS duplication problem:
 
 Since [extract-text-webpack-plugin](http://github.com/webpack/extract-text-webpack-plugin) only bundles (merges) text chunks, if its used to bundle CSS, the bundle might have duplicate entries (chunks can be duplicate free but when merged, duplicate CSS can be created).
@@ -17,12 +15,6 @@ Since [extract-text-webpack-plugin](http://github.com/webpack/extract-text-webpa
 Using npm:
 ```shell
 $ npm install --save-dev optimize-css-assets-webpack-plugin
-```
-
-If you are not going to specify a CSS processor you will also need to install [cssnano](http://github.com/ben-eb/cssnano) (since it's a peer dependency):
-
-```shell
-$ npm install --save-dev cssnano
 ```
 
 ## Configuration:
