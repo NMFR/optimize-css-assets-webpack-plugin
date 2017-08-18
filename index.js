@@ -24,8 +24,8 @@ function OptimizeCssAssetsPlugin(options) {
     assetProcessors: [
       {
         regExp: this.options.assetNameRegExp,
-        processor: function (assetName, asset) {
-          return self.processCss(assetName, asset);
+        processor: function (assetName, asset, assets) {
+          return self.processCss(assetName, asset, assets);
         },
       }
     ],
@@ -33,11 +33,39 @@ function OptimizeCssAssetsPlugin(options) {
   });
 };
 
-OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset) {
+OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset, assets) {debugger
   var css = asset.source();
+  var processOptions = Object.assign(
+    { from: assetName, to: assetName },
+    this.options.cssProcessorOptions || {}
+  );
+  if (processOptions.map && !processOptions.map.prev) {
+    try {
+      var mapJson = assets.getAsset(assetName + '.map');
+      if (mapJson) {
+        var map = JSON.parse(mapJson);
+        if (
+          map &&
+          (
+            (map.sources && map.sources.length > 0) ||
+            (map.mappings && map.mappings.length > 0)
+          )
+        ) {
+          processOptions.map.prev = mapJson;
+        }
+      }
+    } catch (err) {
+      console.warn('OptimizeCssAssetsPlugin.processCss() Error getting previous source map', err);
+    }
+  }
   return this.options
-    .cssProcessor.process(css, Object.assign({ to: assetName }, this.options.cssProcessorOptions))
-    .then(r => r.css);
+    .cssProcessor.process(css, processOptions)
+    .then(r => {
+      if (processOptions.map && r.map && r.map.toString) {
+        assets.setAsset(assetName + '.map', r.map.toString());
+      }
+      return r.css;
+    });
 };
 
 OptimizeCssAssetsPlugin.prototype.apply = function(compiler) {
