@@ -33,7 +33,7 @@ function OptimizeCssAssetsPlugin(options) {
   });
 };
 
-OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset, assets) {debugger
+OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset, assets) {
   var css = asset.source();
   var processOptions = Object.assign(
     { from: assetName, to: assetName },
