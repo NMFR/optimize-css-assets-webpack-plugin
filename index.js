@@ -23,6 +23,7 @@ function OptimizeCssAssetsPlugin(options) {
   this.lastCallInstance = new LastCallWebpackPlugin({
     assetProcessors: [
       {
+        phase: 'compilation.optimize-chunk-assets',
         regExp: this.options.assetNameRegExp,
         processor: function (assetName, asset, assets) {
           return self.processCss(assetName, asset, assets);
