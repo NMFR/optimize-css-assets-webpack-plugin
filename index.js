@@ -52,7 +52,8 @@ OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset, assets
             (map.mappings && map.mappings.length > 0)
           )
         ) {
-          processOptions.map.prev = mapJson;
+          var mapOptions = Object.assign({ prev: mapJson }, processOptions.map);
+          processOptions.map = mapOptions;
         }
       }
     } catch (err) {
