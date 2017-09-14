@@ -23,7 +23,7 @@ function OptimizeCssAssetsPlugin(options) {
   this.lastCallInstance = new LastCallWebpackPlugin({
     assetProcessors: [
       {
-        phase: LastCallWebpackPlugin.prototype.PHASE.OPTIMIZE_CHUNK_ASSETS,
+        phase: LastCallWebpackPlugin.PHASE.OPTIMIZE_CHUNK_ASSETS,
         regExp: this.options.assetNameRegExp,
         processor: function (assetName, asset, assets) {
           return self.processCss(assetName, asset, assets);
@@ -52,8 +52,7 @@ OptimizeCssAssetsPlugin.prototype.processCss = function(assetName, asset, assets
             (map.mappings && map.mappings.length > 0)
           )
         ) {
-          var mapOptions = Object.assign({ prev: mapJson }, processOptions.map);
-          processOptions.map = mapOptions;
+          processOptions.map = Object.assign({ prev: mapJson }, processOptions.map);
         }
       }
     } catch (err) {
