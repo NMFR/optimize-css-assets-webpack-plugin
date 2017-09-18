@@ -30,21 +30,24 @@ The plugin can receive the following options (all of them are optional):
 ``` javascript
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
-	module: {
-		loaders: [
-			{ test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") }
-		]
-	},
-	plugins: [
-		new ExtractTextPlugin("styles.css"),
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      }
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin('styles.css'),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
       cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: {removeAll: true } },
+      cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true
     })
-	]
-}
+  ]
+};
 ```
 
 ## License
