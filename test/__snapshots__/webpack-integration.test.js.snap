@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Webpack Integration Tests duplicate-css-exists-without-plugin 1`] = `"body{color:red}a{color:blue}body{color:red}p{color:green}"`;
+
+exports[`Webpack Integration Tests removes-duplicate-css 1`] = `"a{color:blue}body{color:red}p{color:green}"`;
