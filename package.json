@@ -5,9 +5,9 @@
   "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
   "dependencies": {
     "cssnano": "^3.4.0",
-    "last-call-webpack-plugin": "^2.1.2"
+    "last-call-webpack-plugin": "^3.0.0"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
   "repository": {
     "type": "git",

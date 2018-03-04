@@ -17,6 +17,8 @@ Using npm:
 $ npm install --save-dev optimize-css-assets-webpack-plugin
 ```
 
+> :warning: For webpack v3 or below please use `optimize-css-assets-webpack-plugin@3.2.0`. The `optimize-css-assets-webpack-plugin@4.0.0` version and above supports webpack v4.
+
 ## Configuration:
 
 The plugin can receive the following options (all of them are optional):
