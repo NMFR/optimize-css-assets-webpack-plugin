@@ -8,6 +8,16 @@
     "last-call-webpack-plugin": "^3.0.0"
   },
   "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "watchPathIgnorePatterns": [
+      "<rootDir>/test/js/*.*"
+    ],
+    "testEnvironment": "node"
+  },
   "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
   "repository": {
     "type": "git",
@@ -22,5 +32,17 @@
     "duplicate",
     "extract-text-webpack-plugin"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.9",
+    "extract-text-webpack-plugin": "next",
+    "jest": "^22.1.4",
+    "style-loader": "^0.20.1",
+    "webpack": "^4.0.0"
+  }
 }
