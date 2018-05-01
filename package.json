@@ -44,5 +44,8 @@
     "jest": "^22.1.4",
     "style-loader": "^0.20.1",
     "webpack": "^4.0.0"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0"
   }
 }
