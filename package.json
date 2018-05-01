@@ -1,38 +1,38 @@
 {
   "name": "optimize-css-assets-webpack-plugin",
   "version": "4.0.0",
-  "author": "Nuno Rodrigues",
   "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
-  "dependencies": {
-    "cssnano": "^3.4.0",
-    "last-call-webpack-plugin": "^3.0.0"
-  },
+  "keywords": [
+    "CSS",
+    "duplicate",
+    "extract-text-webpack-plugin",
+    "minimize",
+    "optimize",
+    "remove",
+    "webpack"
+  ],
+  "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
+  "license": "MIT",
+  "author": "Nuno Rodrigues",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "jest": {
+    "testEnvironment": "node",
     "watchPathIgnorePatterns": [
       "<rootDir>/test/js/*.*"
-    ],
-    "testEnvironment": "node"
+    ]
   },
-  "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
+  "dependencies": {
+    "cssnano": "^3.4.0",
+    "last-call-webpack-plugin": "^3.0.0"
   },
-  "keywords": [
-    "CSS",
-    "minimize",
-    "optimize",
-    "webpack",
-    "remove",
-    "duplicate",
-    "extract-text-webpack-plugin"
-  ],
-  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^22.1.0",
