@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "cssnano": "^3.4.0",
+    "cssnano": "^3.10.0",
     "last-call-webpack-plugin": "^3.0.0"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "extract-text-webpack-plugin": "next",
     "jest": "^22.1.4",
     "style-loader": "^0.20.1",
-    "webpack": "^4.0.0"
+    "webpack": "^4.9.1"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
