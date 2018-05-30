@@ -52,6 +52,24 @@ module.exports = {
 };
 ```
 
+## Source-maps:
+
+Notice that, in order to handle Source Maps properly, you also need to setup properly your CSS processor.
+The default cssProcessor is `cssnano` and the default configuration option is `{}`. As no `map` property is specified, it will probably not generate any intended Source Map.
+So, if you are using `cssnano` (default one) and want to support Source Maps, consider setting the `map` option with something like this:
+
+```javascript
+new OptimizeCSSAssetsPlugin({
+  cssProcessorOptions: {
+    map: {
+      inline: false
+    }
+  }
+})
+```
+
+Take a look at your cssProcessor docs for more ways to handle source-maps.
+
 ## License
 
 MIT (http://www.opensource.org/licenses/mit-license.php)
