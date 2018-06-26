@@ -30,33 +30,36 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
   }
 
   processCss(assetName, asset, assets) {
-    const css = asset.source();
+    const css = asset.sourceAndMap ? asset.sourceAndMap() : { source: asset.source() };
     const processOptions = Object.assign(
       { from: assetName, to: assetName },
-      this.options.cssProcessorOptions || {}
+      this.options.cssProcessorOptions
     );
 
     if (processOptions.map && !processOptions.map.prev) {
       try {
-        const mapJson = assets.getAsset(assetName + '.map');
-        if (mapJson) {
-          const map = JSON.parse(mapJson);
-          if (
-            map &&
-            (
-              (map.sources && map.sources.length > 0) ||
-              (map.mappings && map.mappings.length > 0)
-            )
-          ) {
-            processOptions.map = Object.assign({ prev: mapJson }, processOptions.map);
+        let map = css.map;
+        if (!map) {
+          const mapJson = assets.getAsset(assetName + '.map');
+          if (mapJson) {
+            map = JSON.parse(mapJson);
           }
+        }
+        if (
+          map &&
+          (
+            (map.sources && map.sources.length > 0) ||
+            (map.mappings && map.mappings.length > 0)
+          )
+        ) {
+          processOptions.map = Object.assign({ prev: map }, processOptions.map);
         }
       } catch (err) {
         console.warn('OptimizeCssAssetsPlugin.processCss() Error getting previous source map', err);
       }
     }
     return this.options
-      .cssProcessor.process(css, processOptions)
+      .cssProcessor.process(css.source, processOptions)
       .then(r => {
         if (processOptions.map && r.map && r.map.toString) {
           assets.setAsset(assetName + '.map', r.map.toString());
