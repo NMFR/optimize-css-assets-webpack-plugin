@@ -45,7 +45,7 @@ module.exports = {
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
       cssProcessor: require('cssnano'),
-      cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+      cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true
     })
   ]
