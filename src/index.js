@@ -23,6 +23,9 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
     this.options.cssProcessorOptions = !options || options.cssProcessorOptions === undefined ?
       {} :
       options.cssProcessorOptions;
+    this.options.cssNanoOptions = !options || options.cssNanoOptions === undefined ?
+      {} :
+      options.cssNanoOptions;
   }
 
   buildPluginDescriptor() {
@@ -59,7 +62,7 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
       }
     }
     return this.options
-      .cssProcessor.process(css.source, processOptions)
+      .cssProcessor.process(css.source, processOptions, this.options.cssNanoOptions)
       .then(r => {
         if (processOptions.map && r.map && r.map.toString) {
           assets.setAsset(assetName + '.map', r.map.toString());
