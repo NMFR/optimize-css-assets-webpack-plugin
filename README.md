@@ -25,6 +25,7 @@ The plugin can receive the following options (all of them are optional):
 * assetNameRegExp: A regular expression that indicates the names of the assets that should be optimized \ minimized. The regular expression provided is run against the filenames of the files exported by the ExtractTextPlugin instances in your configuration, not the filenames of your source CSS files. Defaults to `/\.css$/g`
 * cssProcessor: The CSS processor used to optimize \ minimize the CSS, defaults to [cssnano](http://github.com/ben-eb/cssnano). This should be a function that follows cssnano.process interface (receives a CSS and options parameters and returns a Promise).
 * cssProcessorOptions: The options passed to the cssProcessor, defaults to `{}`
+* cssProcessorPluginOptions: The plugin options passed to the cssProcessor, defaults to `{}`
 * canPrint: A boolean indicating if the plugin can print messages to the console, defaults to `true`
 
 ## Example:
@@ -45,7 +46,9 @@ module.exports = {
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
       cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }],
+      },
       canPrint: true
     })
   ]
