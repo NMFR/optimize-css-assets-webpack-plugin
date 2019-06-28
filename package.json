@@ -4,7 +4,7 @@
   "author": "Nuno Rodrigues",
   "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
   "dependencies": {
-    "cssnano": "^3.4.0",
+    "cssnano": "^4.1.10",
     "last-call-webpack-plugin": "^2.1.2"
   },
   "main": "index.js",
