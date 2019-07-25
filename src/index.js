@@ -3,29 +3,29 @@ const url = require('url');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 
 class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
-  constructor(options) {
+  constructor(options = {}) {
     super({
       assetProcessors: [
         {
           phase: LastCallWebpackPlugin.PHASES.OPTIMIZE_CHUNK_ASSETS,
-          regExp: (options && options.assetNameRegExp) || /\.css(\?.*)?$/i,
+          regExp: options.assetNameRegExp || /\.css(\?.*)?$/i,
           processor: (assetName, asset, assets) =>
             this.processCss(assetName, asset, assets),
         }
       ],
-      canPrint: options && options.canPrint,
+      canPrint: options.canPrint,
     });
 
-    this.options.assetNameRegExp = !options || !options.assetNameRegExp ?
+    this.options.assetNameRegExp = !options.assetNameRegExp ?
       /\.css(\?.*)?$/i :
       options.assetNameRegExp;
-    this.options.cssProcessor = !options || !options.cssProcessor ?
+    this.options.cssProcessor = !options.cssProcessor ?
         require('cssnano') :
         options.cssProcessor;
-    this.options.cssProcessorOptions = !options || options.cssProcessorOptions === undefined ?
+    this.options.cssProcessorOptions = options.cssProcessorOptions === undefined ?
       {} :
       options.cssProcessorOptions;
-    this.options.cssProcessorPluginOptions = !options || options.cssProcessorPluginOptions === undefined ?
+    this.options.cssProcessorPluginOptions = options.cssProcessorPluginOptions === undefined ?
       {} :
       options.cssProcessorPluginOptions;
   }
