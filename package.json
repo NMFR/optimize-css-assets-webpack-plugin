@@ -34,14 +34,14 @@
     "last-call-webpack-plugin": "^3.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.11.2",
     "babel-jest": "^22.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "css-loader": "^3.0.0",
     "extract-text-webpack-plugin": "next",
-    "jest": "^24.8.0",
+    "jest": "^26.2.2",
     "style-loader": "^0.20.1",
     "webpack": "^4.9.1"
   },
