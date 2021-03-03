@@ -2,6 +2,8 @@
 
 A Webpack plugin to optimize \ minimize CSS assets.
 
+> :warning: For webpack v5 or above please use [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) instead.
+
 ## What does the plugin do?
 
 It will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses [cssnano](http://github.com/ben-eb/cssnano) but a custom CSS processor can be specified).
@@ -58,3 +60,4 @@ module.exports = {
 ## License
 
 MIT (http://www.opensource.org/licenses/mit-license.php)
+

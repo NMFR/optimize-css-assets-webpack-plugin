@@ -1,6 +1,6 @@
 {
   "name": "optimize-css-assets-webpack-plugin",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "A Webpack plugin to optimize \\ minimize CSS assets, with sorce map file name support",
   "keywords": [
     "CSS",
@@ -25,20 +25,20 @@
     ]
   },
   "dependencies": {
-    "cssnano": "^4.1.0",
+    "cssnano": "^4.1.10",
     "last-call-webpack-plugin": "^3.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.1.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^26.3.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "css-loader": "^0.28.9",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.6.0",
     "extract-text-webpack-plugin": "next",
-    "jest": "^22.1.4",
+    "jest": "^26.4.2",
     "style-loader": "^0.20.1",
-    "webpack": "^4.9.1"
+    "webpack": "^4.44.1"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
