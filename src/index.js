@@ -1,4 +1,4 @@
-const url = require('url');
+const path = require('path')
 
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 
@@ -35,10 +35,16 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
   }
 
   processCss(assetName, asset, assets) {
-    const parse = url.parse(assetName);
+    let filename = assetName;
+    let query = '';
+    const idx = filename.indexOf('?');
+    if (idx >= 0) {
+        query = filename.substr(idx);
+        filename = filename.substr(0, idx);
+    }
     const assetInfo = {
-      path: parse.pathname,
-      query: parse.query ? `?${parse.query}` : '',
+      path: filename,
+      query: query,
     };
 
     const css = asset.sourceAndMap ? asset.sourceAndMap() : { source: asset.source() };
@@ -73,7 +79,16 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
       .cssProcessor.process(css.source, processOptions, this.options.cssProcessorPluginOptions)
       .then(r => {
         if (processOptions.map && r.map && r.map.toString) {
-          assets.setAsset(`${assetInfo.path}.map${assetInfo.query}`, r.map.toString());
+          let filename = `${assetInfo.path}.map${assetInfo.query}`
+          if (processOptions.getFileName) {
+            filename = processOptions.getFileName(assetInfo)
+          }
+          assets.setAsset(filename, r.map.toString());
+
+          if (processOptions.append !== false) { // true or undefined
+            let reletivePath = path.relative(path.dirname(assetName), filename).replace(/\\/g, '/')
+            r.css += `\n/*# sourceMappingURL=${reletivePath}*/`
+          }
         }
         return r.css;
       });

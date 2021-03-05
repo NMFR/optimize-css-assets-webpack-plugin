@@ -1,7 +1,7 @@
 {
   "name": "optimize-css-assets-webpack-plugin",
-  "version": "5.0.4",
-  "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
+  "version": "5.0.3",
+  "description": "A Webpack plugin to optimize \\ minimize CSS assets, with sorce map file name support",
   "keywords": [
     "CSS",
     "duplicate",
@@ -11,14 +11,9 @@
     "remove",
     "webpack"
   ],
-  "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
   "license": "MIT",
   "author": "Nuno Rodrigues",
   "main": "src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
-  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch"
