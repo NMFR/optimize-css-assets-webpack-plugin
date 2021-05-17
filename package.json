@@ -30,9 +30,8 @@
     ]
   },
   "dependencies": {
-    "cssnano": "^5.0.2",
-    "last-call-webpack-plugin": "^3.0.0",
-    "postcss": "^8.2.1"
+    "cssnano": "^4.1.10",
+    "last-call-webpack-plugin": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

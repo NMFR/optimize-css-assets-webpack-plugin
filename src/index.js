@@ -2,13 +2,6 @@ const url = require('url');
 
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 
-function getDefaultProcessor() {
-  const postcss = require('postcss');
-  const cssnano = require('cssnano');
-
-  return postcss([cssnano()]);
-}
-
 class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
   constructor(options) {
     super({
@@ -27,7 +20,7 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
       /\.css(\?.*)?$/i :
       options.assetNameRegExp;
     this.options.cssProcessor = !options || !options.cssProcessor ?
-        getDefaultProcessor() :
+        require('cssnano') :
         options.cssProcessor;
     this.options.cssProcessorOptions = !options || options.cssProcessorOptions === undefined ?
       {} :
