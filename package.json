@@ -11,13 +11,13 @@
     "remove",
     "webpack"
   ],
-  "homepage": "http://github.com/NMFR/optimize-css-assets-webpack-plugin",
+  "homepage": "https://github.com/NMFR/optimize-css-assets-webpack-plugin",
   "license": "MIT",
   "author": "Nuno Rodrigues",
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
+    "url": "https://github.com/NMFR/optimize-css-assets-webpack-plugin.git"
   },
   "scripts": {
     "test": "jest",
