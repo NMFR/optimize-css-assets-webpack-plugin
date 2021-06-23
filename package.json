@@ -1,6 +1,6 @@
 {
   "name": "optimize-css-assets-webpack-plugin",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "A Webpack plugin to optimize \\ minimize CSS assets.",
   "keywords": [
     "CSS",
