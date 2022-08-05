@@ -2,11 +2,11 @@ const url = require('url');
 
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 
-function getDefaultProcessor() {
+function getDefaultProcessor(cssProcessorPluginOptions) {
   const postcss = require('postcss');
   const cssnano = require('cssnano');
 
-  return postcss([cssnano()]);
+  return postcss([cssnano(cssProcessorPluginOptions)]);
 }
 
 class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
@@ -26,15 +26,15 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
     this.options.assetNameRegExp = !options || !options.assetNameRegExp ?
       /\.css(\?.*)?$/i :
       options.assetNameRegExp;
-    this.options.cssProcessor = !options || !options.cssProcessor ?
-        getDefaultProcessor() :
-        options.cssProcessor;
     this.options.cssProcessorOptions = !options || options.cssProcessorOptions === undefined ?
       {} :
       options.cssProcessorOptions;
     this.options.cssProcessorPluginOptions = !options || options.cssProcessorPluginOptions === undefined ?
       {} :
       options.cssProcessorPluginOptions;
+    this.options.cssProcessor = !options || !options.cssProcessor ?
+      getDefaultProcessor(this.options.cssProcessorPluginOptions) :
+      options.cssProcessor;
   }
 
   buildPluginDescriptor() {
@@ -77,7 +77,7 @@ class OptimizeCssAssetsWebpackPlugin extends LastCallWebpackPlugin {
       }
     }
     return this.options
-      .cssProcessor.process(css.source, processOptions, this.options.cssProcessorPluginOptions)
+      .cssProcessor.process(css.source, processOptions)
       .then(r => {
         if (processOptions.map && r.map && r.map.toString) {
           assets.setAsset(`${assetInfo.path}.map${assetInfo.query}`, r.map.toString());
